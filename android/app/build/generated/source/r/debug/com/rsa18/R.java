@@ -2306,9 +2306,19 @@ containing a value of this type.
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020049;
         public static final int abc_textfield_search_material=0x7f02004a;
         public static final int android_splash=0x7f02004b;
-        public static final int notification_template_icon_bg=0x7f02004e;
-        public static final int splas_background=0x7f02004c;
-        public static final int splash_russia_background=0x7f02004d;
+        public static final int node_modules_reactnavigation_src_views_assets_backicon=0x7f02004c;
+        public static final int node_modules_reactnavigation_src_views_assets_backiconmask=0x7f02004d;
+        public static final int notification_template_icon_bg=0x7f020058;
+        public static final int splas_background=0x7f02004e;
+        public static final int splash_russia_background=0x7f02004f;
+        public static final int src_assets_cloudcomputing=0x7f020050;
+        public static final int src_assets_hospital_black=0x7f020051;
+        public static final int src_assets_land_black=0x7f020052;
+        public static final int src_assets_mail_black=0x7f020053;
+        public static final int src_assets_plane_white=0x7f020054;
+        public static final int src_assets_splash_russia_background=0x7f020055;
+        public static final int src_assets_takeoff_black=0x7f020056;
+        public static final int src_assets_worldcupbluebackground=0x7f020057;
     }
     public static final class id {
         public static final int action0=0x7f0d0063;
