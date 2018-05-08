@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TextInput, KeyboardAvoidingView, Animated } from 'react-native';
-
-const fifaCupLogo = require('../../assets/fifa_copa_logo.png');
+import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, Animated } from 'react-native';
 
 class Login extends Component {
   constructor() {
@@ -45,13 +43,6 @@ class Login extends Component {
               />
             </View>
           </KeyboardAvoidingView>
-
-          <View style={styles.fifaLogoBox}>
-            <Image 
-              source={fifaCupLogo}
-              style={styles.fifaLogo}
-            />
-          </View>
         </View>
       </Animated.View>
     );
@@ -99,18 +90,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 18
-  },
-  fifaLogoBox: {
-    width: '40%',
-    height: '25%',
-    marginBottom: 20
-  },
-  fifaLogo: {
-    height: '100%',
-    flex: 1,
-    resizeMode: 'contain',
-    alignSelf: 'center'
-  },
+  }
 });
 
 export default Login;
