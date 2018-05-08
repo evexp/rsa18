@@ -13,11 +13,8 @@ ADDED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/Andro
 	xmlns:android
 		ADDED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml:3:5-63
 	android:versionCode
-		INJECTED from /Users/Franc/Desktop/rsa18/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/Franc/Desktop/rsa18/android/app/src/main/AndroidManifest.xml:1:1-28:12
-		INJECTED from /Users/Franc/Desktop/rsa18/android/app/src/main/AndroidManifest.xml
-	xmlns:android
-		ADDED from /Users/Franc/Desktop/rsa18/android/app/src/main/AndroidManifest.xml:1:11-69
+		INJECTED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml
 uses-permission#android.permission.INTERNET
 ADDED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml:7:5-67
 	android:name
@@ -112,9 +109,8 @@ MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /Users/feli
 	tools:overrideLibrary
 		ADDED from [com.android.support:appcompat-v7:23.4.0] /Users/felipecatania/Documents/Repos/rsa18/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
-		INJECTED from /Users/Franc/Desktop/rsa18/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/Franc/Desktop/rsa18/android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/Franc/Desktop/rsa18/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
 		INJECTED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/felipecatania/Documents/Repos/rsa18/android/app/src/main/AndroidManifest.xml

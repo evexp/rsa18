@@ -1101,23 +1101,23 @@ int styleable ActionBar_contentInsetStart 20
 int styleable ActionBar_customNavigationLayout 13
 int styleable ActionBar_displayOptions 3
 int styleable ActionBar_divider 9
-int styleable ActionBar_elevation 10
-int styleable ActionBar_height 11
-int styleable ActionBar_hideOnContentScroll 12
-int styleable ActionBar_homeAsUpIndicator 13
+int styleable ActionBar_elevation 24
+int styleable ActionBar_height 0
+int styleable ActionBar_hideOnContentScroll 19
+int styleable ActionBar_homeAsUpIndicator 26
 int styleable ActionBar_homeLayout 14
-int styleable ActionBar_icon 15
+int styleable ActionBar_icon 7
 int styleable ActionBar_indeterminateProgressStyle 16
-int styleable ActionBar_itemPadding 17
-int styleable ActionBar_logo 18
-int styleable ActionBar_navigationMode 19
-int styleable ActionBar_popupTheme 20
-int styleable ActionBar_progressBarPadding 21
-int styleable ActionBar_progressBarStyle 22
-int styleable ActionBar_subtitle 23
-int styleable ActionBar_subtitleTextStyle 24
-int styleable ActionBar_title 25
-int styleable ActionBar_titleTextStyle 26
+int styleable ActionBar_itemPadding 18
+int styleable ActionBar_logo 8
+int styleable ActionBar_navigationMode 2
+int styleable ActionBar_popupTheme 25
+int styleable ActionBar_progressBarPadding 17
+int styleable ActionBar_progressBarStyle 15
+int styleable ActionBar_subtitle 4
+int styleable ActionBar_subtitleTextStyle 6
+int styleable ActionBar_title 1
+int styleable ActionBar_titleTextStyle 5
 int[] styleable ActionBarLayout { 0x010100b3 }
 int styleable ActionBarLayout_android_layout_gravity 0
 int[] styleable ActionMenuItemView { 0x0101013f }
@@ -1422,25 +1422,23 @@ int styleable LinearLayoutCompat_android_baselineAligned 2
 int styleable LinearLayoutCompat_android_baselineAlignedChildIndex 3
 int styleable LinearLayoutCompat_android_gravity 0
 int styleable LinearLayoutCompat_android_orientation 1
-int styleable LinearLayoutCompat_android_baselineAligned 2
-int styleable LinearLayoutCompat_android_baselineAlignedChildIndex 3
 int styleable LinearLayoutCompat_android_weightSum 4
 int styleable LinearLayoutCompat_divider 5
-int styleable LinearLayoutCompat_dividerPadding 6
-int styleable LinearLayoutCompat_measureWithLargestChild 7
-int styleable LinearLayoutCompat_showDividers 8
+int styleable LinearLayoutCompat_dividerPadding 8
+int styleable LinearLayoutCompat_measureWithLargestChild 6
+int styleable LinearLayoutCompat_showDividers 7
 int[] styleable LinearLayoutCompat_Layout { 0x010100b3, 0x010100f4, 0x010100f5, 0x01010181 }
 int styleable LinearLayoutCompat_Layout_android_layout_gravity 0
-int styleable LinearLayoutCompat_Layout_android_layout_width 1
 int styleable LinearLayoutCompat_Layout_android_layout_height 2
 int styleable LinearLayoutCompat_Layout_android_layout_weight 3
+int styleable LinearLayoutCompat_Layout_android_layout_width 1
 int[] styleable ListPopupWindow { 0x010102ac, 0x010102ad }
 int styleable ListPopupWindow_android_dropDownHorizontalOffset 0
 int styleable ListPopupWindow_android_dropDownVerticalOffset 1
 int[] styleable MenuGroup { 0x0101000e, 0x010100d0, 0x01010194, 0x010101de, 0x010101df, 0x010101e0 }
+int styleable MenuGroup_android_checkableBehavior 5
 int styleable MenuGroup_android_enabled 0
 int styleable MenuGroup_android_id 1
-int styleable MenuGroup_android_visible 2
 int styleable MenuGroup_android_menuCategory 3
 int styleable MenuGroup_android_orderInCategory 4
 int styleable MenuGroup_android_visible 2
@@ -1453,11 +1451,10 @@ int styleable MenuItem_android_checkable 11
 int styleable MenuItem_android_checked 3
 int styleable MenuItem_android_enabled 1
 int styleable MenuItem_android_icon 0
-int styleable MenuItem_android_enabled 1
 int styleable MenuItem_android_id 2
-int styleable MenuItem_android_checked 3
-int styleable MenuItem_android_visible 4
 int styleable MenuItem_android_menuCategory 5
+int styleable MenuItem_android_numericShortcut 10
+int styleable MenuItem_android_onClick 12
 int styleable MenuItem_android_orderInCategory 6
 int styleable MenuItem_android_title 7
 int styleable MenuItem_android_titleCondensed 8
@@ -1466,10 +1463,11 @@ int styleable MenuItem_showAsAction 13
 int[] styleable MenuView { 0x010100ae, 0x0101012c, 0x0101012d, 0x0101012e, 0x0101012f, 0x01010130, 0x01010131, 0x7f0100eb }
 int styleable MenuView_android_headerBackground 4
 int styleable MenuView_android_horizontalDivider 2
-int styleable MenuView_android_verticalDivider 3
-int styleable MenuView_android_headerBackground 4
 int styleable MenuView_android_itemBackground 5
 int styleable MenuView_android_itemIconDisabledAlpha 6
+int styleable MenuView_android_itemTextAppearance 1
+int styleable MenuView_android_verticalDivider 3
+int styleable MenuView_android_windowAnimationStyle 0
 int styleable MenuView_preserveIconSpacing 7
 int[] styleable PopupWindow { 0x01010176, 0x7f0100ec }
 int styleable PopupWindow_android_popupBackground 0
@@ -1478,6 +1476,8 @@ int[] styleable PopupWindowBackgroundState { 0x7f0100ed }
 int styleable PopupWindowBackgroundState_state_above_anchor 0
 int[] styleable SearchView { 0x010100da, 0x0101011f, 0x01010220, 0x01010264, 0x7f0100ee, 0x7f0100ef, 0x7f0100f0, 0x7f0100f1, 0x7f0100f2, 0x7f0100f3, 0x7f0100f4, 0x7f0100f5, 0x7f0100f6, 0x7f0100f7, 0x7f0100f8, 0x7f0100f9, 0x7f0100fa }
 int styleable SearchView_android_focusable 0
+int styleable SearchView_android_imeOptions 3
+int styleable SearchView_android_inputType 2
 int styleable SearchView_android_maxWidth 1
 int styleable SearchView_closeIcon 8
 int styleable SearchView_commitIcon 13
@@ -1504,7 +1504,6 @@ int styleable Spinner_popupTheme 4
 int[] styleable SwitchCompat { 0x01010124, 0x01010125, 0x01010142, 0x7f0100fd, 0x7f0100fe, 0x7f0100ff, 0x7f010100, 0x7f010101, 0x7f010102, 0x7f010103 }
 int styleable SwitchCompat_android_textOff 1
 int styleable SwitchCompat_android_textOn 0
-int styleable SwitchCompat_android_textOff 1
 int styleable SwitchCompat_android_thumb 2
 int styleable SwitchCompat_showText 9
 int styleable SwitchCompat_splitTrack 8
@@ -1518,15 +1517,14 @@ int styleable TextAppearance_android_shadowColor 4
 int styleable TextAppearance_android_shadowDx 5
 int styleable TextAppearance_android_shadowDy 6
 int styleable TextAppearance_android_shadowRadius 7
+int styleable TextAppearance_android_textColor 3
+int styleable TextAppearance_android_textSize 0
+int styleable TextAppearance_android_textStyle 2
+int styleable TextAppearance_android_typeface 1
 int styleable TextAppearance_textAllCaps 8
 int[] styleable TextStyle { 0x01010034, 0x01010095, 0x01010097, 0x01010098, 0x010100ab, 0x01010153, 0x0101015d, 0x01010161, 0x01010162, 0x01010163, 0x01010164 }
-int styleable TextStyle_android_textAppearance 0
-int styleable TextStyle_android_textSize 1
-int styleable TextStyle_android_textStyle 2
-int styleable TextStyle_android_textColor 3
 int styleable TextStyle_android_ellipsize 4
 int styleable TextStyle_android_maxLines 5
-int styleable TextStyle_android_singleLine 6
 int styleable TextStyle_android_shadowColor 7
 int styleable TextStyle_android_shadowDx 8
 int styleable TextStyle_android_shadowDy 9
@@ -1565,9 +1563,8 @@ int styleable Toolbar_titleTextColor 23
 int[] styleable View { 0x01010000, 0x010100da, 0x7f010113, 0x7f010114, 0x7f010115 }
 int styleable View_android_focusable 1
 int styleable View_android_theme 0
-int styleable View_android_focusable 1
-int styleable View_paddingEnd 2
-int styleable View_paddingStart 3
+int styleable View_paddingEnd 3
+int styleable View_paddingStart 2
 int styleable View_theme 4
 int[] styleable ViewBackgroundHelper { 0x010100d4, 0x7f010116, 0x7f010117 }
 int styleable ViewBackgroundHelper_android_background 0
@@ -1575,6 +1572,6 @@ int styleable ViewBackgroundHelper_backgroundTint 1
 int styleable ViewBackgroundHelper_backgroundTintMode 2
 int[] styleable ViewStubCompat { 0x010100d0, 0x010100f2, 0x010100f3 }
 int styleable ViewStubCompat_android_id 0
-int styleable ViewStubCompat_android_layout 1
 int styleable ViewStubCompat_android_inflatedId 2
-int xml preferences 0x7f0e0000
+int styleable ViewStubCompat_android_layout 1
+int xml preferences 0x7f060000
