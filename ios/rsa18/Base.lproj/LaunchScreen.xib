@@ -15,16 +15,24 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_russia_background" translatesAutoresizingMaskIntoConstraints="NO" id="UzR-2p-Iuf">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_russia_background" translatesAutoresizingMaskIntoConstraints="NO" id="UzR-2p-Iuf">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boa-oD-oms">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59795055650684936" colorSpace="custom" customColorSpace="sRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="UzR-2p-Iuf" secondAttribute="trailing" id="GQr-Jo-1ez"/>
+                <constraint firstAttribute="trailing" secondItem="boa-oD-oms" secondAttribute="trailing" id="NYU-ts-13C"/>
+                <constraint firstItem="boa-oD-oms" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Nx4-lk-EqZ"/>
                 <constraint firstAttribute="bottom" secondItem="UzR-2p-Iuf" secondAttribute="bottom" id="bUK-nM-jKi"/>
                 <constraint firstItem="UzR-2p-Iuf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="d54-7O-oDH"/>
                 <constraint firstItem="UzR-2p-Iuf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rrS-YY-8Ni"/>
+                <constraint firstAttribute="bottom" secondItem="boa-oD-oms" secondAttribute="bottom" id="tZM-ii-pgb"/>
+                <constraint firstItem="boa-oD-oms" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tkH-dn-YyC"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
