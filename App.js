@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, Platform } from 'react-native';
 import { TabNavigator, TabBarBottom, StackNavigator } from 'react-navigation';
 import firebase from 'firebase';
+import RNSplashScreen from 'react-native-splash-screen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from './src/components/screens/HomeScreen';
@@ -16,6 +17,7 @@ console.disableYellowBox = true;
 
 class App extends React.Component {
   componentDidMount() {
+    RNSplashScreen.hide();
     const config = {
       apiKey: 'AIzaSyBh72i6uNdTBGj-j4FfG0O6DTZuXKFkeCs',
       authDomain: 'evexp-rsa2018.firebaseapp.com',
