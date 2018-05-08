@@ -11,7 +11,9 @@ class HomeScreen extends Component {
     this.state = {
       match: null,
       news: null,
-      logos: null
+      logos: null,
+      error: false,
+      loading: true
     };
   }
 
@@ -39,29 +41,35 @@ class HomeScreen extends Component {
     firebase.database().ref('home')
       .once('value', snapshot => {
         AsyncStorage.setItem('home', JSON.stringify(snapshot.val()));
-        this.setState({ match: snapshot.val().match, news: snapshot.val().news });
+        AsyncStorage.getItem('loginCode')
+        .then(response => {
+          firebase.database().ref(`${response}/logos`)
+            .once('value', snap => {
+                AsyncStorage.setItem('logos', JSON.stringify(snap.val()));
+                Array.isArray(snap.val()) ?
+                this.setState({ logos: snap.val(), loading: false, match: snapshot.val().match, news: snapshot.val().news }) :
+                this.setState({ logos: [], loading: false, match: snapshot.val().match, news: snapshot.val().news });
+              });
+          });
       });
-    AsyncStorage.getItem('loginCode')
-      .then(response => {
-        firebase.database().ref(`${response}/logos`)
-          .once('value', snapshot => {
-              AsyncStorage.setItem('logos', JSON.stringify(snapshot.val()));
-              Array.isArray(snapshot) ?
-              this.setState({ logos: snapshot.val() }) :
-              this.setState({ logos: [] });
-            });
-        });
   }
 
   getFromStorage() {
     AsyncStorage.getItem('home')
     .then(response => {
-      const parsed = JSON.parse(response);
-      this.setState({ match: parsed.match, news: parsed.news });
-    });
-    AsyncStorage.getItem('logos')
-    .then(response => {
-      this.setState({ logos: JSON.parse(response) });
+      if (response) {
+        const parsed = JSON.parse(response);
+        AsyncStorage.getItem('logos')
+        .then(res => {
+          if (res) {
+            this.setState({ logos: JSON.parse(res), match: parsed.match, news: parsed.news, loading: false });
+          } else {
+            this.setState({ match: parsed.match, news: parsed.news, loading: false });
+          }
+        });
+      } else {
+        this.setState({ error: true, loading: false });
+      }
     });
   }
 
@@ -78,7 +86,7 @@ class HomeScreen extends Component {
     return (
       <ScrollView>
         <View style={styles.pageContainer}>
-          {this.state.logos.length > 1 &&
+          {this.state.logos.length > 0 &&
           <View style={styles.logosContainer}>
             {this.state.logos.map(logo => (
               <Image source={{ uri: logo }} style={styles.logoImage} />)
@@ -94,10 +102,18 @@ class HomeScreen extends Component {
     );
   }
 
+  renderError() {
+    return <NoConnectionScreen />;
+  }
+
   render() {
-    return this.state.match && this.state.news && this.state.logos ? 
-      this.renderHome() : 
-      this.renderSpinner(); 
+    if (this.state.loading) {
+      return this.renderSpinner();
+    }
+    if (this.state.error) {
+      return this.renderError();
+    }
+    return this.renderHome();
   }
 }
 

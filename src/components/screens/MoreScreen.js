@@ -4,6 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import call from 'react-native-phone-call';
 import firebase from 'firebase';
 import Card from '../Card';
+import NoConnectionScreen from './NoConnectionScreen';
 
 const hospitalIcon = require('../../assets/hospital_black.png');
 const mailIcon = require('../../assets/mail_black.png');
@@ -12,7 +13,9 @@ class MoreScreen extends Component {
   constructor() {
     super();
     this.state = {
-      more: null
+      more: null,
+      error: false,
+      loading: true
     };
   }
 
@@ -42,7 +45,7 @@ class MoreScreen extends Component {
         firebase.database().ref(`${response}/more`)
           .once('value', snapshot => {
               AsyncStorage.setItem('more', JSON.stringify(snapshot.val()));
-              this.setState({ more: snapshot.val() });
+              this.setState({ more: snapshot.val(), loading: false });
             });
         });
   }
@@ -50,7 +53,11 @@ class MoreScreen extends Component {
   getFromStorage() {
     AsyncStorage.getItem('more')
     .then(response => {
-      this.setState({ more: JSON.parse(response) });
+      if (response) {
+        this.setState({ more: JSON.parse(response), loading: false });
+      } else {
+        this.setState({ loading: false, error: true });
+      }
     });
   }
 
@@ -75,7 +82,7 @@ class MoreScreen extends Component {
   }
 
   onPressLogout() {
-    AsyncStorage.removeItem('loginCode');
+    AsyncStorage.multiRemove(['loginCode', 'home', 'logos']);
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -152,20 +159,29 @@ class MoreScreen extends Component {
             </View>
           </TouchableOpacity>
         </Card>
-
         <View style={{ marginTop: Platform.OS === 'ios' ? 20 : 15 }}>
-        <Button
-          onPress={this.onPressLogout.bind(this)}
-          title="Logout"
-          color={buttonColor}
-        />
+          <Button
+            onPress={this.onPressLogout.bind(this)}
+            title="Logout"
+            color={buttonColor}
+          />
         </View>
       </View>
     );
   }
 
+  renderError() {
+    return <NoConnectionScreen />;
+  }
+
   render() {    
-    return this.state.more ? this.renderContent() : this.renderSpinner();
+    if (this.state.loading) {
+      return this.renderSpinner();
+    }
+    if (this.state.error) {
+      return this.renderError();
+    }
+    return this.renderContent();
   }
 }
 

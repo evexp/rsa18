@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet, ActivityIndicator, AsyncStorage, Platform, NetInfo } from 'react-native';
 import firebase from 'firebase';
 import FlightCard from '../FlightCard';
+import NoConnectionScreen from './NoConnectionScreen';
 
 class FlightScreen extends Component {
   constructor() {
     super();
     this.state = {
-      flights: null
+      flights: null,
+      loading: true,
+      error: false
     };
   }
 
@@ -37,7 +40,7 @@ class FlightScreen extends Component {
         firebase.database().ref(`${response}/flights`)
           .once('value', snapshot => {
               AsyncStorage.setItem('flights', JSON.stringify(snapshot.val()));
-              this.setState({ flights: snapshot.val() });
+              this.setState({ flights: snapshot.val(), loading: false });
             });
         });
   }
@@ -45,7 +48,11 @@ class FlightScreen extends Component {
   getFromStorage() {
     AsyncStorage.getItem('flights')
     .then(response => {
-      this.setState({ flights: JSON.parse(response) });
+      if (response) {
+        this.setState({ flights: JSON.parse(response), loading: false });
+      } else {
+        this.setState({ error: true, loading: false });
+      }
     });
   }
 
@@ -67,8 +74,18 @@ class FlightScreen extends Component {
     );
   }
 
+  renderError() {
+    return <NoConnectionScreen />;
+  }
+
   render() {
-    return this.state.flights ? this.renderFlights() : this.renderSpinner();
+    if (this.state.loading) {
+      return this.renderSpinner();
+    }
+    if (this.state.error) {
+      return this.renderError();
+    }
+    return this.renderFlights();
   }
 }
 
