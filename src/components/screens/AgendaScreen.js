@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, AsyncStorage, ScrollView, ActivityIndicator, Platform, NetInfo } from 'react-native';
 import firebase from 'firebase';
-import AgendaDay from '../AgendaDay.js';
+import AgendaDay from '../AgendaDay';
+import NoConnectionScreen from './NoConnectionScreen';
 
 class AgendaScreen extends Component {
   constructor() {
     super();
     this.state = {
       agenda: null,
+      loading: true,
+      error: false
     };
   }
 
@@ -37,7 +40,7 @@ class AgendaScreen extends Component {
         firebase.database().ref(`${response}/agenda`)
           .once('value', snapshot => {
               AsyncStorage.setItem('agenda', JSON.stringify(snapshot.val()));
-              this.setState({ agenda: snapshot.val() });
+              this.setState({ agenda: snapshot.val(), loading: false });
             });
         });
   }
@@ -45,7 +48,11 @@ class AgendaScreen extends Component {
   getFromStorage() {
     AsyncStorage.getItem('agenda')
     .then(response => {
-      this.setState({ agenda: JSON.parse(response) });
+      if (response) {
+        this.setState({ agenda: JSON.parse(response), loading: false });
+      } else {
+        this.setState({ error: true, loading: false });
+      }
     });
   }
 
@@ -70,8 +77,18 @@ class AgendaScreen extends Component {
     );
   }
 
+  renderError() {
+    return <NoConnectionScreen />;
+  }
+
   render() {
-    return this.state.agenda ? this.renderAgenda() : this.renderSpinner();
+    if (this.state.loading) {
+      return this.renderSpinner();
+    }
+    if (this.state.error) {
+      return this.renderError();
+    }
+    return this.renderAgenda();
   }
 }
 

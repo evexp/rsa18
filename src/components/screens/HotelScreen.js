@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, AsyncStorage, ActivityIndicator, Platform, NetInfo } from 'react-native';
 import firebase from 'firebase';
 import HotelCard from '../HotelCard';
+import NoConnectionScreen from './NoConnectionScreen';
 
 class HotelScreen extends Component {
   constructor() {
     super();
     this.state = {
-      hotels: null
+      hotels: null,
+      loading: true,
+      error: false
     };
   }
 
@@ -37,7 +40,7 @@ class HotelScreen extends Component {
         firebase.database().ref(`${response}/hotels`)
           .once('value', snapshot => {
               AsyncStorage.setItem('hotels', JSON.stringify(snapshot.val()));
-              this.setState({ hotels: snapshot.val() });
+              this.setState({ hotels: snapshot.val(), loading: false });
             });
         });
   }
@@ -45,7 +48,11 @@ class HotelScreen extends Component {
   getFromStorage() {
     AsyncStorage.getItem('hotels')
     .then(response => {
-      this.setState({ hotels: JSON.parse(response) });
+      if (response) {
+        this.setState({ hotels: JSON.parse(response), loading: false });
+      } else {
+        this.setState({ error: true, loading: false });
+      }
     });
   }
 
@@ -67,8 +74,18 @@ class HotelScreen extends Component {
     );
   }
 
+  renderError() {
+    return <NoConnectionScreen />;
+  }
+
   render() {
-    return this.state.hotels ? this.renderHotels() : this.renderSpinner();
+    if (this.state.loading) {
+      return this.renderSpinner();
+    }
+    if (this.state.error) {
+      return this.renderError();
+    }
+    return this.renderHotels();
   }
 }
 
