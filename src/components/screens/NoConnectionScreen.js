@@ -3,13 +3,13 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 const noConnectionImg = require('../../assets/cloud-computing.png');
 
-const NoConnectionScreen = () => (
+const NoConnectionScreen = ({ white }) => (
   <View style={styles.container}>
     <Image source={noConnectionImg} style={styles.img} />
     <View style={styles.textContainer}>
-      <Text style={styles.textTitle}>Oh no!</Text>
-      <Text style={styles.textSubtitle}>Se ha perdido la conexión a Internet.</Text>
-      <Text style={styles.textSubtitle}>Revise su conexión y vuelta a intentarlo.</Text>
+      <Text style={white ? styles.textTitleWhite : styles.textTitle}>Oh no!</Text>
+      <Text style={white ? styles.textSubtitleWhite : styles.textSubtitle}>Se ha perdido la conexión a Internet.</Text>
+      <Text style={white ? styles.textSubtitleWhite : styles.textSubtitle}>Revise su conexión y vuelva a intentarlo.</Text>
     </View>
   </View>
 );
@@ -33,11 +33,20 @@ const styles = StyleSheet.create({
     fontSize: 30, 
     color: '#757575' 
   },
+  textTitleWhite: { 
+    fontSize: 30, 
+    color: '#FFFFFF' 
+  },
   textSubtitle: { 
     marginTop: 15, 
     fontSize: 16, 
     color: '#757575' 
-  }
+  },
+  textSubtitleWhite: { 
+    marginTop: 15,
+    fontSize: 16,
+    color: '#FFFFFF' 
+  },
 });
 
 export default NoConnectionScreen;

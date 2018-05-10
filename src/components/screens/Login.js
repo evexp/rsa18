@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TextInput, KeyboardAvoidingView, Animated } from 'react-native';
-
-const fifaCupLogo = require('../../assets/fifa_copa_logo.png');
+import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, Animated, TouchableOpacity } from 'react-native';
 
 class Login extends Component {
   constructor() {
@@ -26,32 +24,41 @@ class Login extends Component {
       <Animated.View style={[styles.container, { opacity: this.state.fadeAnim }]}>
         <View style={styles.backdropView}>
           <KeyboardAvoidingView style={styles.content} behavior="padding" enabled>
-            <View style={styles.welcome}>
+            {this.props.showWelcome && <View style={styles.welcome}>
               <Text style={styles.headline}>Bienvenido</Text>
               <Text style={styles.headline}>Welcome</Text>
               <Text style={styles.headline}>желанный</Text>
-            </View>
-            <View style={styles.welcome}>
+            </View>}
+            <View style={styles.loginContainer}>
+              {this.props.showWrongMsg && <Text style={styles.wrongText}>Usuario y contraseña incorrectos. Intente de nuevo.</Text>}
               <TextInput 
                 style={styles.textInput} 
-                placeholder='Ingrese su código'
+                placeholder='Usuario'
                 placeholderTextColor='white'
-                onChangeText={this.props.onChange}
-                value={this.props.loginText}
+                onChangeText={this.props.onChangeUser}
+                value={this.props.userText}
                 autoCorrect={false}
                 underlineColorAndroid="#00000000"
                 allowFontScaling={false}
                 autoCapitalize="none"
               />
+              <TextInput 
+                style={[styles.textInput, { marginTop: 10 }]} 
+                placeholder='Contraseña'
+                placeholderTextColor='white'
+                onChangeText={this.props.onChangePass}
+                value={this.props.passText}
+                autoCorrect={false}
+                underlineColorAndroid="#00000000"
+                allowFontScaling={false}
+                autoCapitalize="none"
+                secureTextEntry
+              />
+              <TouchableOpacity onPress={this.props.onPressButton} style={styles.buttonTouchable}>
+                  <Text style={styles.buttonText}>Ingresar</Text>
+              </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
-
-          <View style={styles.fifaLogoBox}>
-            <Image 
-              source={fifaCupLogo}
-              style={styles.fifaLogo}
-            />
-          </View>
         </View>
       </Animated.View>
     );
@@ -73,12 +80,12 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '80%',
-    height: '60%',
+    height: '80%',
     marginTop: 50,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  welcome: {
+  loginContainer: {
     width: '80%',
   },
   headline: {
@@ -93,24 +100,32 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingRight: 20,
     paddingLeft: 20,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderStyle: 'solid',
     borderBottomColor: 'white',
     color: 'white',
-    textAlign: 'center',
     fontSize: 18
   },
-  fifaLogoBox: {
-    width: '40%',
-    height: '25%',
-    marginBottom: 20
+  buttonTouchable: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
+    marginTop: 30,
+    marginBottom: 10,
+    backgroundColor: '#FF5252',
+    borderRadius: 50
   },
-  fifaLogo: {
-    height: '100%',
-    flex: 1,
-    resizeMode: 'contain',
-    alignSelf: 'center'
+  wrongText: {
+    color: 'white',
+    marginBottom: 10,
+    textAlign: 'center'
   },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 18
+  }
 });
 
 export default Login;

@@ -45,11 +45,13 @@ class HomeScreen extends Component {
         .then(response => {
           firebase.database().ref(`${response}/logos`)
             .once('value', snap => {
+              if (Array.isArray(snap.val())) {
                 AsyncStorage.setItem('logos', JSON.stringify(snap.val()));
-                Array.isArray(snap.val()) ?
-                this.setState({ logos: snap.val(), loading: false, match: snapshot.val().match, news: snapshot.val().news }) :
-                this.setState({ logos: [], loading: false, match: snapshot.val().match, news: snapshot.val().news });
-              });
+                this.setState({ logos: snap.val(), loading: false, match: snapshot.val().match, news: snapshot.val().news });
+              } else {
+                this.setState({ logos: null, loading: false, match: snapshot.val().match, news: snapshot.val().news });
+              }
+            });
           });
       });
   }
@@ -86,7 +88,7 @@ class HomeScreen extends Component {
     return (
       <ScrollView>
         <View style={styles.pageContainer}>
-          {this.state.logos.length > 0 &&
+          {this.state.logos &&
           <View style={styles.logosContainer}>
             {this.state.logos.map(logo => (
               <Image source={{ uri: logo }} style={styles.logoImage} />)

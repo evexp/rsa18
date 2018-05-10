@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet, AsyncStorage } from 'react-native';
+import { View, ImageBackground, StyleSheet, AsyncStorage, Platform, NetInfo, Keyboard } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'firebase';
 import Login from './Login';
+import ConnectionError from './ConnectionError';
 
 const splashImg = require('../../assets/splash_russia_background.jpg');
 
@@ -11,29 +12,78 @@ class SplashScreen extends Component {
     super();
     this.state = {
       showLogin: false,
-      loginText: '',
-      loginCodes: []
+      showConnectionError: false,
+      showWrongMsg: false,
+      showWelcome: true,
+      passText: '',
+      userText: '',
+      loginCodes: null
     };
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      firebase.database().ref('/')
-        .once('value', snapshot => {
-          this.setState({ loginCodes: Object.keys(snapshot.val()) });
-        });
-      AsyncStorage.getItem('loginCode').then(response => {
-        if (response) {
-          this.resetNavigation('HomeRoutes');
+    if (Platform.OS === 'android') {
+      Keyboard.addListener('keyboardDidShow', this.keyboardShow.bind(this));
+      Keyboard.addListener('keyboardDidHide', this.keyboardHide.bind(this));
+    }
+    if (Platform.OS === 'ios') {
+      fetch('https://www.google.com')
+      .then(() => {
+        this.checkLoginCode();
+      })
+      .catch(() => {
+        this.checkLoginCode(false);
+      });
+    } else { 
+      NetInfo.isConnected.fetch().done(isConnected => {
+        if (isConnected) {
+          this.checkLoginCode();
         } else {
-          this.setState({ showLogin: true });
+          this.checkLoginCode(false);
         }
       });
-    }, 1000);
+    }
   }
 
-  onChangeLoginText(text) {
-    this.setState({ loginText: text }, this.checkLoginText);
+  keyboardShow() {
+    this.setState({ showWelcome: false });
+  }
+
+  keyboardHide() {
+    this.setState({ showWelcome: true });
+  }
+
+  fetchLoginCodesFromFirebase(hasInternet) {
+    if (hasInternet) {
+      firebase.database().ref('/codes')
+        .once('value', snapshot => {
+          this.setState({ loginCodes: snapshot.val(), showLogin: true });
+        });
+    } else {
+      this.setState({ showConnectionError: true });
+    }
+  }
+
+  checkLoginCode(hasInternet = true) {
+    AsyncStorage.getItem('loginCode').then(response => {
+      if (response) {
+        this.resetNavigation('HomeRoutes');
+      } else {
+        this.fetchLoginCodesFromFirebase(hasInternet);
+      }
+    });
+  }
+
+  onChangeUserText(text) {
+    this.setState({ userText: text });
+  }
+
+  onChangePassText(text) {
+    this.setState({ passText: text });
+  }
+
+  onPressButton() {
+    this.checkLoginText();
   }
   
   resetNavigation(targetRoute) {
@@ -47,13 +97,15 @@ class SplashScreen extends Component {
   }
  
   async checkLoginText() {
-    if (this.state.loginCodes.includes(this.state.loginText)) {
+    if (this.state.loginCodes[this.state.userText] && this.state.loginCodes[this.state.userText] === this.state.passText) {
       try {
-        await AsyncStorage.setItem('loginCode', this.state.loginText);
+        await AsyncStorage.setItem('loginCode', this.state.userText);
         this.resetNavigation('HomeRoutes');
       } catch (error) {
         console.log('Error setting item in AsyncStorage');
       }
+    } else {
+      this.setState({ showWrongMsg: true });
     }
   }
 
@@ -65,11 +117,8 @@ class SplashScreen extends Component {
           source={splashImg}
         >
           <View style={styles.backdropView}>
-            {this.state.showLogin && 
-            <Login 
-              onChange={this.onChangeLoginText.bind(this)}
-              loginText={this.state.loginText} 
-            />}
+            {this.state.showConnectionError && <ConnectionError />}
+            {this.state.showLogin && <Login showWelcome={this.state.showWelcome} showWrongMsg={this.state.showWrongMsg} onChangeUser={this.onChangeUserText.bind(this)} userText={this.state.userText} onChangePass={this.onChangePassText.bind(this)} passText={this.state.passText} onPressButton={this.onPressButton.bind(this)} />}
           </View>
         </ImageBackground>
       </View>
