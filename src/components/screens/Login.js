@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, Animated } from 'react-native';
+import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, Animated, TouchableOpacity } from 'react-native';
 
 class Login extends Component {
   constructor() {
@@ -29,10 +29,20 @@ class Login extends Component {
               <Text style={styles.headline}>Welcome</Text>
               <Text style={styles.headline}>желанный</Text>
             </View>
-            <View style={styles.welcome}>
+            <View style={styles.loginContainer}>
+              {this.props.showWrongMsg && <Text style={styles.wrongText}>Usuario y contraseña incorrectos. Intente de nuevo.</Text>}
               <TextInput 
                 style={styles.textInput} 
-                placeholder='Ingrese su código'
+                placeholder='Usuario'
+                placeholderTextColor='white'
+                autoCorrect={false}
+                underlineColorAndroid="#00000000"
+                allowFontScaling={false}
+                autoCapitalize="none"
+              />
+              <TextInput 
+                style={[styles.textInput, { marginTop: 10 }]} 
+                placeholder='Contraseña'
                 placeholderTextColor='white'
                 onChangeText={this.props.onChange}
                 value={this.props.loginText}
@@ -40,7 +50,11 @@ class Login extends Component {
                 underlineColorAndroid="#00000000"
                 allowFontScaling={false}
                 autoCapitalize="none"
+                secureTextEntry
               />
+              <TouchableOpacity onPress={this.props.onPressButton} style={styles.buttonTouchable}>
+                  <Text style={styles.buttonText}>Ingresar</Text>
+              </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
         </View>
@@ -64,12 +78,12 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '80%',
-    height: '60%',
+    height: '80%',
     marginTop: 50,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  welcome: {
+  loginContainer: {
     width: '80%',
   },
   headline: {
@@ -84,9 +98,28 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingRight: 20,
     paddingLeft: 20,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderStyle: 'solid',
     borderBottomColor: 'white',
+    color: 'white',
+    fontSize: 18
+  },
+  buttonTouchable: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 20,
+    paddingLeft: 20,
+    marginTop: 30,
+    marginBottom: 10,
+    backgroundColor: '#FF5252',
+    borderRadius: 50
+  },
+  wrongText: {
+    color: 'white',
+    marginBottom: 10,
+    textAlign: 'center'
+  },
+  buttonText: {
     color: 'white',
     textAlign: 'center',
     fontSize: 18

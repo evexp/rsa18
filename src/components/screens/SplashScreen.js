@@ -13,6 +13,7 @@ class SplashScreen extends Component {
     this.state = {
       showLogin: false,
       showConnectionError: false,
+      showWrongMsg: false,
       loginText: '',
       loginCodes: []
     };
@@ -67,7 +68,11 @@ class SplashScreen extends Component {
   }
 
   onChangeLoginText(text) {
-    this.setState({ loginText: text }, this.checkLoginText);
+    this.setState({ loginText: text });
+  }
+
+  onPressButton() {
+    this.checkLoginText();
   }
   
   resetNavigation(targetRoute) {
@@ -88,6 +93,8 @@ class SplashScreen extends Component {
       } catch (error) {
         console.log('Error setting item in AsyncStorage');
       }
+    } else {
+      this.setState({ showWrongMsg: true });
     }
   }
 
@@ -100,7 +107,7 @@ class SplashScreen extends Component {
         >
           <View style={styles.backdropView}>
             {this.state.showConnectionError && <ConnectionError />}
-            {this.state.showLogin && <Login onChange={this.onChangeLoginText.bind(this)} loginText={this.state.loginText} />}
+            {this.state.showLogin && <Login showWrongMsg={this.state.showWrongMsg} onChange={this.onChangeLoginText.bind(this)} loginText={this.state.loginText} onPressButton={this.onPressButton.bind(this)} />}
           </View>
         </ImageBackground>
       </View>
