@@ -22,8 +22,10 @@ class SplashScreen extends Component {
   }
 
   componentDidMount() {
-    Keyboard.addListener('keyboardDidShow', this.keyboardShow.bind(this));
-    Keyboard.addListener('keyboardDidHide', this.keyboardHide.bind(this));
+    if (Platform.OS === 'android') {
+      Keyboard.addListener('keyboardDidShow', this.keyboardShow.bind(this));
+      Keyboard.addListener('keyboardDidHide', this.keyboardHide.bind(this));
+    }
     if (Platform.OS === 'ios') {
       fetch('https://www.google.com')
       .then(() => {
