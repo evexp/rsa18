@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '80%',
     marginTop: 50,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   loginContainer: {
