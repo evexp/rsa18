@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet, AsyncStorage, Platform, NetInfo } from 'react-native';
+import { View, ImageBackground, StyleSheet, AsyncStorage, Platform, NetInfo, Keyboard } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'firebase';
 import Login from './Login';
@@ -14,6 +14,7 @@ class SplashScreen extends Component {
       showLogin: false,
       showConnectionError: false,
       showWrongMsg: false,
+      showWelcome: true,
       passText: '',
       userText: '',
       loginCodes: null
@@ -21,6 +22,8 @@ class SplashScreen extends Component {
   }
 
   componentDidMount() {
+    Keyboard.addListener('keyboardDidShow', this.keyboardShow.bind(this));
+    Keyboard.addListener('keyboardDidHide', this.keyboardHide.bind(this));
     if (Platform.OS === 'ios') {
       fetch('https://www.google.com')
       .then(() => {
@@ -38,6 +41,14 @@ class SplashScreen extends Component {
         }
       });
     }
+  }
+
+  keyboardShow() {
+    this.setState({ showWelcome: false });
+  }
+
+  keyboardHide() {
+    this.setState({ showWelcome: true });
   }
 
   fetchLoginCodesFromFirebase(hasInternet) {
@@ -105,7 +116,7 @@ class SplashScreen extends Component {
         >
           <View style={styles.backdropView}>
             {this.state.showConnectionError && <ConnectionError />}
-            {this.state.showLogin && <Login showWrongMsg={this.state.showWrongMsg} onChangeUser={this.onChangeUserText.bind(this)} userText={this.state.userText} onChangePass={this.onChangePassText.bind(this)} passText={this.state.passText} onPressButton={this.onPressButton.bind(this)} />}
+            {this.state.showLogin && <Login showWelcome={this.state.showWelcome} showWrongMsg={this.state.showWrongMsg} onChangeUser={this.onChangeUserText.bind(this)} userText={this.state.userText} onChangePass={this.onChangePassText.bind(this)} passText={this.state.passText} onPressButton={this.onPressButton.bind(this)} />}
           </View>
         </ImageBackground>
       </View>

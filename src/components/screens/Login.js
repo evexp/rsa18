@@ -24,11 +24,11 @@ class Login extends Component {
       <Animated.View style={[styles.container, { opacity: this.state.fadeAnim }]}>
         <View style={styles.backdropView}>
           <KeyboardAvoidingView style={styles.content} behavior="padding" enabled>
-            <View style={styles.welcome}>
+            {this.props.showWelcome && <View style={styles.welcome}>
               <Text style={styles.headline}>Bienvenido</Text>
               <Text style={styles.headline}>Welcome</Text>
               <Text style={styles.headline}>желанный</Text>
-            </View>
+            </View>}
             <View style={styles.loginContainer}>
               {this.props.showWrongMsg && <Text style={styles.wrongText}>Usuario y contraseña incorrectos. Intente de nuevo.</Text>}
               <TextInput 
