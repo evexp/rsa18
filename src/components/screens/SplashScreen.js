@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, ImageBackground, StyleSheet, AsyncStorage } from 'react-native';
+import { View, ImageBackground, StyleSheet, AsyncStorage, Platform, NetInfo } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import firebase from 'firebase';
 import Login from './Login';
+import ConnectionError from './ConnectionError';
 
 const splashImg = require('../../assets/splash_russia_background.jpg');
 
@@ -11,25 +12,58 @@ class SplashScreen extends Component {
     super();
     this.state = {
       showLogin: false,
+      showConnectionError: false,
       loginText: '',
       loginCodes: []
     };
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      firebase.database().ref('/')
-        .once('value', snapshot => {
-          this.setState({ loginCodes: Object.keys(snapshot.val()) });
-        });
-      AsyncStorage.getItem('loginCode').then(response => {
-        if (response) {
-          this.resetNavigation('HomeRoutes');
+    if (Platform.OS === 'ios') {
+      fetch('https://www.google.com')
+      .then(() => {
+        this.checkLoginCode();
+      })
+      .catch(() => {
+        console.log('no internet');
+        this.checkLoginCode(false);
+      });
+    } else { 
+      NetInfo.isConnected.fetch().done(isConnected => {
+        if (isConnected) {
+          this.checkLoginCode();
         } else {
-          this.setState({ showLogin: true });
+          console.log('no internet');
+          this.checkLoginCode(false);
         }
       });
-    }, 1000);
+    }
+  }
+
+  checkForInternet(successCB, failCB) {
+    console.log(successCB, failCB);
+  }
+
+  fetchLoginCodesFromFirebase(hasInternet) {
+    if (hasInternet) {
+      firebase.database().ref('/')
+        .once('value', snapshot => {
+          this.setState({ loginCodes: Object.keys(snapshot.val()), showLogin: true });
+        });
+    } else {
+      console.log('no internet');
+      this.setState({ showConnectionError: true });
+    }
+  }
+
+  checkLoginCode(hasInternet = true) {
+    AsyncStorage.getItem('loginCode').then(response => {
+      if (response) {
+        this.resetNavigation('HomeRoutes');
+      } else {
+        this.fetchLoginCodesFromFirebase(hasInternet);
+      }
+    });
   }
 
   onChangeLoginText(text) {
@@ -65,11 +99,8 @@ class SplashScreen extends Component {
           source={splashImg}
         >
           <View style={styles.backdropView}>
-            {this.state.showLogin && 
-            <Login 
-              onChange={this.onChangeLoginText.bind(this)}
-              loginText={this.state.loginText} 
-            />}
+            {this.state.showConnectionError && <ConnectionError />}
+            {this.state.showLogin && <Login onChange={this.onChangeLoginText.bind(this)} loginText={this.state.loginText} />}
           </View>
         </ImageBackground>
       </View>
