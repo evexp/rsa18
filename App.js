@@ -26,7 +26,9 @@ class App extends React.Component {
       storageBucket: 'evexp-rsa2018.appspot.com',
       messagingSenderId: '135549760815'
     };
-    firebase.initializeApp(config);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
   }
 
   render() {
@@ -151,9 +153,6 @@ const SplashLoginStack = StackNavigator(
   {
     Splash: {
       screen: SplashScreen
-    },
-    Login: {
-      screen: Login
     },
     HomeRoutes: {
       screen: ({ navigation }) =>
