@@ -9,7 +9,7 @@ const NoConnectionScreen = ({ white }) => (
     <View style={styles.textContainer}>
       <Text style={white ? styles.textTitleWhite : styles.textTitle}>Oh no!</Text>
       <Text style={white ? styles.textSubtitleWhite : styles.textSubtitle}>Se ha perdido la conexión a Internet.</Text>
-      <Text style={white ? styles.textSubtitleWhite : styles.textSubtitle}>Revise su conexión y vuelta a intentarlo.</Text>
+      <Text style={white ? styles.textSubtitleWhite : styles.textSubtitle}>Revise su conexión y vuelva a intentarlo.</Text>
     </View>
   </View>
 );
