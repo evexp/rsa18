@@ -14,8 +14,9 @@ class SplashScreen extends Component {
       showLogin: false,
       showConnectionError: false,
       showWrongMsg: false,
-      loginText: '',
-      loginCodes: []
+      passText: '',
+      userText: '',
+      loginCodes: null
     };
   }
 
@@ -26,7 +27,6 @@ class SplashScreen extends Component {
         this.checkLoginCode();
       })
       .catch(() => {
-        console.log('no internet');
         this.checkLoginCode(false);
       });
     } else { 
@@ -34,25 +34,19 @@ class SplashScreen extends Component {
         if (isConnected) {
           this.checkLoginCode();
         } else {
-          console.log('no internet');
           this.checkLoginCode(false);
         }
       });
     }
   }
 
-  checkForInternet(successCB, failCB) {
-    console.log(successCB, failCB);
-  }
-
   fetchLoginCodesFromFirebase(hasInternet) {
     if (hasInternet) {
-      firebase.database().ref('/')
+      firebase.database().ref('/codes')
         .once('value', snapshot => {
-          this.setState({ loginCodes: Object.keys(snapshot.val()), showLogin: true });
+          this.setState({ loginCodes: snapshot.val(), showLogin: true });
         });
     } else {
-      console.log('no internet');
       this.setState({ showConnectionError: true });
     }
   }
@@ -67,8 +61,12 @@ class SplashScreen extends Component {
     });
   }
 
-  onChangeLoginText(text) {
-    this.setState({ loginText: text });
+  onChangeUserText(text) {
+    this.setState({ userText: text });
+  }
+
+  onChangePassText(text) {
+    this.setState({ passText: text });
   }
 
   onPressButton() {
@@ -86,9 +84,9 @@ class SplashScreen extends Component {
   }
  
   async checkLoginText() {
-    if (this.state.loginCodes.includes(this.state.loginText)) {
+    if (this.state.loginCodes[this.state.userText] && this.state.loginCodes[this.state.userText] === this.state.passText) {
       try {
-        await AsyncStorage.setItem('loginCode', this.state.loginText);
+        await AsyncStorage.setItem('loginCode', this.state.userText);
         this.resetNavigation('HomeRoutes');
       } catch (error) {
         console.log('Error setting item in AsyncStorage');
@@ -107,7 +105,7 @@ class SplashScreen extends Component {
         >
           <View style={styles.backdropView}>
             {this.state.showConnectionError && <ConnectionError />}
-            {this.state.showLogin && <Login showWrongMsg={this.state.showWrongMsg} onChange={this.onChangeLoginText.bind(this)} loginText={this.state.loginText} onPressButton={this.onPressButton.bind(this)} />}
+            {this.state.showLogin && <Login showWrongMsg={this.state.showWrongMsg} onChangeUser={this.onChangeUserText.bind(this)} userText={this.state.userText} onChangePass={this.onChangePassText.bind(this)} passText={this.state.passText} onPressButton={this.onPressButton.bind(this)} />}
           </View>
         </ImageBackground>
       </View>

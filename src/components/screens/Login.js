@@ -35,6 +35,8 @@ class Login extends Component {
                 style={styles.textInput} 
                 placeholder='Usuario'
                 placeholderTextColor='white'
+                onChangeText={this.props.onChangeUser}
+                value={this.props.userText}
                 autoCorrect={false}
                 underlineColorAndroid="#00000000"
                 allowFontScaling={false}
@@ -44,8 +46,8 @@ class Login extends Component {
                 style={[styles.textInput, { marginTop: 10 }]} 
                 placeholder='Contraseña'
                 placeholderTextColor='white'
-                onChangeText={this.props.onChange}
-                value={this.props.loginText}
+                onChangeText={this.props.onChangePass}
+                value={this.props.passText}
                 autoCorrect={false}
                 underlineColorAndroid="#00000000"
                 allowFontScaling={false}
