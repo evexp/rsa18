@@ -4,17 +4,23 @@ import { scale, verticalScale } from 'react-native-size-matters';
 
 const planeIcon = require('../assets/plane_white.png');
 
-const FlightHeader = ({ origin, destination, airline, flightNumber, backdropURL }) => {
-  const { container, backgroundImage, contentContainer, origDestContainer, lowContainer, origDestText, airlineText, flightNumberText } = styles;
+const FlightHeader = ({ origin, originCity, destination, destinationCity, airline, flightNumber, backdropURL }) => {
+  const { container, backgroundImage, contentContainer, origDestContainer, lowContainer, origDestText, origDestCityText, airlineText, flightNumberText } = styles;
   
   return (
     <View style={container}>
       <Image source={{ uri: backdropURL }} style={backgroundImage} />
       <View style={contentContainer}>
         <View style={origDestContainer}>
-          <Text style={origDestText}>{origin}</Text>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Text style={origDestText}>{origin}</Text>
+            <Text style={origDestCityText}>{originCity}</Text>
+          </View>
           <Image source={planeIcon} style={{ height: 26, width: 26 }} />
-          <Text style={origDestText}>{destination}</Text>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Text style={origDestText}>{destination}</Text>
+            <Text style={origDestCityText}>{destinationCity}</Text>
+          </View>
         </View>
         <View style={lowContainer}>
           <Text style={airlineText}>{airline}</Text>
@@ -57,6 +63,12 @@ const styles = StyleSheet.create({
   origDestText: {
     color: 'white',
     fontSize: scale(32),
+    fontWeight: '200',
+    fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined
+  },
+  origDestCityText: {
+    color: 'white',
+    fontSize: scale(12),
     fontWeight: '200',
     fontFamily: Platform.OS === 'android' ? 'sans-serif-light' : undefined
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, RefreshControl, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import FlightHeader from './FlightHeader';
 import Card from './Card';
