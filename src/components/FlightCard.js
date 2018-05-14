@@ -6,8 +6,8 @@ import FlightHeader from './FlightHeader';
 import FlightColumn from './FlightColumn';
 
 const FlightCard = (props) => {
-  const { airline, arrival, departure, backdropURL, cabin, destination, origin, flightNumber, plane, duration } = props;
-  const dataForHeader = { origin, destination, airline, flightNumber, backdropURL };
+  const { airline, arrival, departure, backdropURL, cabin, destination, destinationCity, origin, originCity, flightNumber, plane, duration } = props;
+  const dataForHeader = { origin, originCity, destination, destinationCity, airline, flightNumber, backdropURL };
 
   return (
     <Card style={{ marginBottom: 20 }}>
@@ -17,6 +17,7 @@ const FlightCard = (props) => {
         <View style={styles.middleColumnContainer}>
           <Text style={styles.middleText}>{duration}</Text>
           <View style={styles.middleLine} />
+          <Text style={styles.middleText}>DURACIÓN</Text>
         </View>
         <FlightColumn isLanding {...arrival} />
       </View>
@@ -60,7 +61,8 @@ const styles = StyleSheet.create({
   middleLine: {
     backgroundColor: '#3F51B5',
     height: 2,
-    marginTop: 2
+    marginTop: 2,
+    marginBottom: 2
   },
   footerContainer: {
     backgroundColor: '#EFEFEF',
